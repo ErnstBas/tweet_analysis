@@ -2,12 +2,12 @@ import twint
 
 # Configure
 c = twint.Config()
-c.Search = "spacex"
+c.Search = "Your Search Term"
 c.Lang = "english"
-c.Since = "2020-08-01"
-c.Until = "2020-08-03"
+c.Since = "startdate yyyy-mm-dd"
+c.Until = "enddate yyyy-mm-dd"
 c.Store_csv = True 
-c.Output = "spacex.csv"
+c.Output = "Filename.csv"
 
 # Run
 twint.run.Search(c)
