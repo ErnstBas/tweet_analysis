@@ -96,16 +96,24 @@ def create_wordcloud():
     plt.show()
 
 
+
+# n-grams bi-grams
+# https://towardsdatascience.com/from-dataframe-to-n-grams-e34e29df3460
+
 def basic_clean(text):
     """
     A simple function to clean up the data. All the words that
     are not designated as a stop word is then lemmatized after
     encoding and basic regex parsing are performed.
-    https://towardsdatascience.com/from-dataframe-to-n-grams-e34e29df3460
     """
     wnl = nltk.stem.WordNetLemmatizer()
+    stopwords = nltk.corpus.stopwords.words('english')
+    text = (unicodedata.normalize('NFKD', text)
+      .encode('ascii', 'ignore')
+      .decode('utf-8', 'ignore'))
     words = re.sub(r'[^\w\s]', '', text).split()
-    return [wnl.lemmatize(word) for word in words]
+    return [wnl.lemmatize(word) for word in words if word not in stopwords]
+    
 
 
 def n_grams():
@@ -119,7 +127,7 @@ def n_grams():
 
     trigrams = (pd.Series(nltk.ngrams(words, 3)).value_counts())[:20]
     print('\ntrigrams:\n', trigrams[:20])
-
+  
 
 file = 'FileName.csv'
 data = prepare_file()
